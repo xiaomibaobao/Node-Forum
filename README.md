@@ -8,9 +8,8 @@
 ## 安装
 ```javascript
 npm install -g express-generator
-express -e SmartisanBBS
-cd 201606blog & npm install
-set DEBUG=SmartisanBBS:* & npm run start
+npm install
+set DEBUG=SmartisanBBS:* & npm run start(或者手动运行bin目录下的www.js即可)
 ```
 然后在你本地的Mongodb数据库中启动数据库（27017），[MongoDB简单教程](https://xiaomibaobao.github.io/html/Node.js/MongoDB.html)；
 在浏览器访问 `http://localhost:3000` 就成功了

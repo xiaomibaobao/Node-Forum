@@ -1,0 +1,95 @@
+<%include ../include/header.html%>
+<%
+ articles.forEach(function(article){%>
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" src="<%=article.user.avatar%>" alt="">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">
+                <a href="/article/detail/<%=article._id%>"><%=article.title%></a>
+            </h4>
+            <p><%-article.content%></p>
+            <p>作者:<%=article.user.username%>|时间:<%=article.createAt.toLocaleString()%>|阅读量:<%=article.pv%>|评论数:<%=article.comments.length%></p>
+        </div>
+    </div>
+ <%});
+%>
+<nav>
+    <ul class="pagination">
+        <%if(pageNum>1){%>
+            <li>
+                <a onclick="gotoPage(<%=pageNum-1%>)" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        <%}%>
+
+        <%
+         for(let i=1;i<=totalPage;i++){%>
+            <li class="<%=i==pageNum?'active':''%>"><a  onclick="gotoPage(<%=i%>)" href="#"><%=i%></a></li>
+         <%}
+        %>
+        <%if(pageNum < totalPage){%>
+        <li>
+            <a  onclick="gotoPage(<%=pageNum+1%>)" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <%}%>
+    </ul>
+</nav>
+<!--切换每页的条数-->
+<nav>
+    每页的条数
+    <ul class="pagination">
+        <li>
+            <select onchange="gotoPage(<%=pageNum%>)" class="form-control" id="pageSize">
+                <option <%=pageSize == 5?'selected':''%>  value="5">5</option>
+                <option <%=pageSize == 10?'selected':''%> value="10">10</option>
+                <option <%=pageSize == 20?'selected':''%>  value="20">20</option>
+            </select>
+        </li>
+    </ul>
+</nav>
+
+<nav>
+    排序字段
+    <ul class="pagination">
+        <li>
+            <select  onchange="gotoPage(<%=pageNum%>)" class="form-control" id="orderBy">
+                <option <%=orderBy == 'user'?'selected':''%> value="user">作者</option>
+                <option <%=orderBy == 'title'?'selected':''%> value="title">标题</option>
+                <option <%=orderBy == 'content'?'selected':''%> value="content">内容</option>
+                <option <%=orderBy == 'createAt'?'selected':''%> value="createAt">创建时间</option>
+            </select>
+        </li>
+    </ul>
+</nav>
+
+<nav>
+     升序/降序
+    <ul class="pagination">
+        <li>
+            <select  onchange="gotoPage(<%=pageNum%>)" class="form-control" id="order">
+                <option <%=order == 1?'selected':''%> value="1">升序</option>
+                <option  <%=order == -1?'selected':''%>  value="-1">降序</option>
+            </select>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    //跳转到指定的页码
+    function gotoPage(pageNum){
+        var pageSize = document.querySelector('#pageSize').value;//每页的条数
+        var orderBy = document.querySelector('#orderBy').value;//排序的字段
+        var order = document.querySelector('#order').value;//排序的顺序
+        var url = `/article/list?keyword=<%=keyword%>&pageNum=${pageNum}&pageSize=${pageSize}&orderBy=${orderBy}&order=${order}`;
+        window.location.href=url;
+    }
+</script>
+
+<%include ../include/footer.html%>

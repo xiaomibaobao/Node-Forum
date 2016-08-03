@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>锤子科技内部论坛BATE</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">切换</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">锤子科技内部论坛BATE</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <%
+                  if(user){%>
+                <li><a href="/user/logout">退出</a></li>
+                <li><a href="/article/add">发表文章</a></li>
+                   <%}else{%>
+                <li><a href="/user/reg">注册</a></li>
+                <li><a href="/user/login">登录</a></li>
+                   <%}
+                %>
+            </ul>
+            <form action="/article/list" method="get" class="navbar-form navbar-left" role="search">
+                <span>各位老师，现在论坛支持MarkDown了哦！<span class="label label-default">New</span></span>
+                <div class="form-group">
+                    <input name="keyword" type="text" class="form-control" placeholder="关键字" value="<%=keyword%>">
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+
+            </form>
+
+            <%if(user){%>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href=""><img src="<%=user.avatar%>" class="img-rounded"></a></li>
+                <li><a href=""><%=user.username%></a></li>
+            </ul>
+            <%}%>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <%if(success){%>
+    <div class="alert alert-success" role="alert"><%=success%></div>
+    <%}%>
+    <%if(error){%>
+    <div class="alert alert-danger" role="alert"><%=error%></div>
+    <%}%>
